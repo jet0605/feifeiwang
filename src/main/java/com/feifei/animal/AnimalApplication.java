@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
 @EnableCaching
-@MapperScan("com.feifei.animal.mapper")
+@MapperScan("com.feifei.animal.dao")
 public class AnimalApplication {
 
     public static void main(String[] args) {

@@ -1,10 +1,19 @@
 package com.feifei.animal.controller;
 
+
+
+
+import com.feifei.animal.Enum.Sex;
+
+
+import com.feifei.animal.dao.PersonDao;
+import com.feifei.animal.entity.person.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -26,6 +35,10 @@ public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     private static Map<String,String> map;
+    private String savePath="F:\\feifei\\src\\main\\resources\\static\\image\\";
+
+    @Autowired
+    PersonDao personDao;
 
     static{
         map = new HashMap<String,String>();
@@ -48,7 +61,13 @@ public class UserController {
     }
 
     @RequestMapping("/login")
-    public String Login(){
+    public String Login(HttpServletRequest request){
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+        //Person person = IPersonService.getByAccount(name);
+       // System.out.println("password: "+ person.getPassword());
+        //List<Person> list = personDao.SelectAll();
+
         LOGGER.info("登录页面");
         return "login";
     }
@@ -60,13 +79,20 @@ public class UserController {
      */
     @RequestMapping("/upload")
     @ResponseBody
-    public Map<String, String> upload(HttpServletRequest request) {
+    public Map<String, String> upload(HttpServletRequest request) throws IOException {
         MultipartHttpServletRequest MultipartRequest = (MultipartHttpServletRequest)request;
         Iterator<String> fileNames = MultipartRequest.getFileNames();
         String fileName = fileNames.next();
-        LOGGER.info("filename: " + fileName);
+        //LOGGER.info("filename: " + fileName);
         MultipartFile file = MultipartRequest.getFile(fileName);
+        fileName = file.getOriginalFilename();
+        LOGGER.info("filename: " + fileName);
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));//获得文件后缀
         String imgurl = "";
+        fileName = request.getParameter("name ");
+        savePath +=   fileName + suffixName;//保存路径
+        LOGGER.info("fillPath: " + savePath);
+        File saveFile = new File(savePath);
         //转化为BASE64图片格式给前端页面
         try{
             InputStream is = file.getInputStream();
@@ -86,6 +112,28 @@ public class UserController {
             e.printStackTrace();
         }
         map.put("url","data:image/jpeg;base64,"+imgurl);
+        file.transferTo(saveFile);
         return map;
+    }
+
+    @RequestMapping("/reg/save")
+    public String regSave(@RequestParam("name")String name, @RequestParam("password") String password, @RequestParam("realName") String realName, @RequestParam("type") String type, @RequestParam("sex")Sex sex,@RequestParam("address")String address,@RequestParam("phone") String phone,@RequestParam("mail")String mail){
+        Person person = new Person();
+        person.setId(null);
+        person.setName(name);
+        person.setPassword(password);
+        person.setRealName(realName);
+        if(type.equals("个人")){
+            person.setPriority(0);
+        }else{
+            person.setPriority(1);
+        }
+        person.setSex(sex);
+        person.setAddress(address);
+        person.setPhone(phone);
+        person.setMail(mail);
+        person.setPhoto(savePath);
+        //personMapper.insert(person);
+        return "login";
     }
 }

@@ -38,11 +38,11 @@
 <div class="layui-body">
     <!-- 内容主体区域 -->
     <div style="padding: 95px;">
-        <form class="layui-form" action="">
+        <form class="layui-form" action="/reg/save">
             <div class="layui-form-item">
                 <label class="layui-form-label">登录名:</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入登录名" autocomplete="off" class="layui-input">
+                    <input type="text" name="name" required  lay-verify="required" placeholder="请输入登录名" autocomplete="off" class="layui-input">
                 </div>
 
             </div>
@@ -58,7 +58,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名:</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                    <input type="text" name="realName" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
 
                 </div>
             </div>
@@ -82,7 +82,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">通信地址：</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入通信地址" autocomplete="off" class="layui-input">
+                    <input type="text" name="address" required  lay-verify="required" placeholder="请输入通信地址" autocomplete="off" class="layui-input">
                 </div>
 
             </div>
@@ -90,7 +90,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">手机号码：</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone" required  lay-verify="required" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
@@ -105,7 +105,7 @@
                 <label class="layui-form-label">头像：</label>
                 <div class="layui-input-inline">
                     <div class="layui-upload-list" style="margin:0">
-                        <img src="../static/image/dog-logo.png" id="picture" class="layui-upload-img" width="50" height="50">
+                        <img src="../static/image/dog-logo.png" id="picture" name = "headPhoto" class="layui-upload-img" width="50" height="50">
                     </div>
                 </div>
                 <div class="layui-input-inline layui-btn-container" style="width: auto;">
